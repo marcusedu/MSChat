@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/chatRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/baseText"
+        android:layout_marginBottom="-12dp"
+        android:background="#bdbdbd" />
+
+    <LinearLayout
+        android:id="@+id/baseText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/background_input_area"
+        android:orientation="horizontal"
+        android:paddingTop="8dp">
+
+        <EditText
+            android:id="@+id/chatEditText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="6dp"
+            android:layout_weight="1"
+            android:background="@drawable/background_text_input"
+            android:ems="10"
+            android:inputType="text|textMultiLine"
+            android:maxLines="7"
+            android:padding="12dp"
+            android:scrollbars="vertical"
+            android:text="Bacon ipsum dolor amet frankfurter ground round corned beef kielbasa. Pastrami burgdoggen alcatra, short loin cupim ham pig corned beef strip steak kielbasa turducken. Jowl pancetta buffalo kevin venison t-bone. Picanha cow turkey doner pig filet mignon capicola jowl beef ribs. Brisket chicken biltong, jowl prosciutto pig meatball porchetta ribeye tail boudin tenderloin kevin. Landjaeger pig short ribs turkey, jerky ham kielbasa andouille."
+            android:textSize="16sp" />
+
+        <ImageButton
+            android:id="@+id/chatSendButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:background="@null"
+            android:padding="8dp"
+            app:srcCompat="@android:drawable/ic_menu_send" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/chatTit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="16dp"
+        android:background="@drawable/background_date"
+        android:paddingBottom="4dp"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp"
+        android:paddingTop="4dp"
+        android:text="Hoje"
+        android:textColor="#FFA"
+        android:textSize="18sp" />
+
+</RelativeLayout>
