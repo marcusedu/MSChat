@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="date_color">#4fc3f7</color>
+    <color name="white">#FFF</color>
+    <color name="transparent_color">#00ffffff</color>
+    <color name="sender_color">#69f0ae</color>
+    <color name="grey_300">#e0e0e0</color>
+</resources>
