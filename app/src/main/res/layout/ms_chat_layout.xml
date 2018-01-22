@@ -11,7 +11,8 @@
         android:layout_height="match_parent"
         android:layout_above="@id/baseText"
         android:layout_marginBottom="-12dp"
-        android:background="#bdbdbd" />
+        android:background="#bdbdbd"
+        app:reverseLayout="true" />
 
     <LinearLayout
         android:id="@+id/baseText"
@@ -49,7 +50,7 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/chatTit"
+        android:id="@+id/chatDateTopIndicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
