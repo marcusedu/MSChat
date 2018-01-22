@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import info.marcussoftware.mschat.R;
 import info.marcussoftware.mschat.interfaces.Message;
+import info.marcussoftware.mschat.interfaces.OnLoadMoreItemsListener;
 import info.marcussoftware.mschat.util.AnimateUtil;
 import info.marcussoftware.mschat.util.DateUtil;
 import info.marcussoftware.mschat.view.adapter.ChatAdapter;
@@ -138,9 +139,5 @@ public class MSChatView extends View {
                 }
             }
         });
-    }
-
-    interface OnLoadMoreItemsListener {
-        void loadMoreItem(Message latestItem, int NumTotalItems);
     }
 }
