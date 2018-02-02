@@ -1,9 +1,10 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
+apply plugin: 'maven'
+apply from: 'https://raw.github.com/chrisbanes/gradle-mvn-push/master/gradle-mvn-push.gradle'
 
 android {
     compileSdkVersion 26
     defaultConfig {
-        applicationId "info.marcussoftware.mschat"
         minSdkVersion 16
         targetSdkVersion 26
         versionCode 1
@@ -21,6 +22,20 @@ android {
         sourceCompatibility 1.8
     }
 }
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+//            repository(url: "file:///C:/gradle/mschat/")
+//            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/")
+            repository(url: "https://oss.sonatype.org/content/repositories/snapshots/")
+            pom.groupId = GROUP
+            pom.artifactId = POM_ARTIFACT_ID
+            pom.version = VERSION_NAME
+        }
+    }
+}
+task install(dependsOn: uploadArchives)
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
