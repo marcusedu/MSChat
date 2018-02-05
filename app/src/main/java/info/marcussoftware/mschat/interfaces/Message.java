@@ -6,14 +6,14 @@ import java.util.Calendar;
  * Created by Marcus Eduardo - marcusedu7@gmail.com on 21/01/2018.
  */
 
-public interface Message<ID_TYPE> {
+public interface Message {
     Calendar getDateTime();
 
     String getUserName();
 
-    ID_TYPE getUserId();
+    String getUserId();
 
     String getMessage();
 
-    ID_TYPE getMessageId();
+    String getMessageId();
 }
