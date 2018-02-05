@@ -1,4 +1,4 @@
-package info.marcussoftware.mschat.view.adapter;
+package info.marcussoftware.mschat.view.adapter.util;
 
 import java.util.Calendar;
 
@@ -13,7 +13,18 @@ public class ChatWrapper {
     private Calendar date;
     private Message message;
 
-    public enum WrapperType {SENDED_BY_ME, SENDED_BY_OTHER, DATE}
+    public enum WrapperType {
+        SENDED_BY_ME(2), SENDED_BY_OTHER(4), DATE(6);
+        int myNum;
+
+        WrapperType(int i) {
+            myNum = i;
+        }
+
+        public int getValue() {
+            return myNum;
+        }
+    }
 
     public WrapperType getType() {
         return this.mWrapperType;
