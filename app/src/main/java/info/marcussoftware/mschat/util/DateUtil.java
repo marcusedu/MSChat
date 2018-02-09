@@ -9,9 +9,12 @@ import java.util.Locale;
  */
 
 public class DateUtil {
+    private static Locale lBr = new Locale("pt", "BR");
     private static SimpleDateFormat simpleDateFormat =
-            new SimpleDateFormat("dd 'de' MMMM 'de' yyyy", new Locale("pt", "BR"));
-//            new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
+            new SimpleDateFormat("dd 'de' MMMM 'de' yyyy", lBr);
+    //            new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
+    private static SimpleDateFormat simpleTimeFormat =
+            new SimpleDateFormat("HH:mm", lBr);
 
     public static String formatDate(Calendar dateTime) {
         Calendar now = Calendar.getInstance();
@@ -27,5 +30,9 @@ public class DateUtil {
         return dateTime.get(Calendar.YEAR) == dateTime1.get(Calendar.YEAR) &&
                 dateTime.get(Calendar.MONTH) == dateTime1.get(Calendar.MONTH) &&
                 dateTime.get(Calendar.DAY_OF_MONTH) == dateTime1.get(Calendar.DAY_OF_MONTH);
+    }
+
+    public static String formatTime(Calendar date) {
+        return simpleTimeFormat.format(date.getTime());
     }
 }
