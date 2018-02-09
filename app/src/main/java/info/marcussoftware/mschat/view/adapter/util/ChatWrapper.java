@@ -49,10 +49,10 @@ public class ChatWrapper {
         return new Builder();
     }
 
-    public class Builder {
+    public static class Builder {
         private ChatWrapper mChatWrapper;
 
-        private Builder() {
+        public Builder() {
             mChatWrapper = new ChatWrapper();
         }
 
