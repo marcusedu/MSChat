@@ -13,6 +13,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.List;
 
 import info.marcussoftware.mschat.R;
 import info.marcussoftware.mschat.interfaces.Message;
@@ -20,12 +23,14 @@ import info.marcussoftware.mschat.interfaces.OnLoadMoreItemsListener;
 import info.marcussoftware.mschat.util.AnimateUtil;
 import info.marcussoftware.mschat.util.DateUtil;
 import info.marcussoftware.mschat.view.adapter.ChatAdapter;
+import info.marcussoftware.mschat.view.adapter.util.ChatWrapper;
+import info.marcussoftware.mschat.view.contract.MSChatPresenter;
 
 /**
  * Created by Marcus Eduardo - marcusedu7@gmail.com on 21/01/2018.
  */
 
-public class MSChatView extends View {
+public class MSChatView extends View implements info.marcussoftware.mschat.view.contract.MSChatView {
     private RecyclerView mRecyclerView;
     private TextView mDateTopIndicator;
     private EditText mMessageEditor;
@@ -34,6 +39,7 @@ public class MSChatView extends View {
     private RecyclerView.OnScrollListener mScrollListener;
     private OnLoadMoreItemsListener mOnLoadMoreItemsListener;
     private Handler mHandler = new Handler(Looper.myLooper());
+    private MSChatPresenter mPresenter;
 
     public MSChatView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
@@ -85,7 +91,9 @@ public class MSChatView extends View {
                     if (!recyclerView.canScrollVertically(-1)) {
                         //List end top.
                         if (mOnLoadMoreItemsListener != null) {
-                            mOnLoadMoreItemsListener.loadMoreItem(mAdapter.getMessageList().get(mAdapter.getItemCount() - 1), mAdapter.getItemCount());
+                            mOnLoadMoreItemsListener.loadMoreItem(
+                                    mAdapter.getMessageList().get(mAdapter.getItemCount() - 1).getMessage(),
+                                    mAdapter.getItemCount());
                         }
                     } else if (!recyclerView.canScrollVertically(1)) {
                         //List end bottom
@@ -101,21 +109,19 @@ public class MSChatView extends View {
     private void updateDateTopIndicator() {
         LinearLayoutManager llm = (LinearLayoutManager) mRecyclerView.getLayoutManager();
         int topPosition = llm.findFirstCompletelyVisibleItemPosition();
-        Message messageTop = mAdapter.getMessage(topPosition);
-        Message messageOut = mAdapter
+        ChatWrapper messageTop = mAdapter.getMessage(topPosition);
+        ChatWrapper messageOut = mAdapter
                 .getMessage(mAdapter.getItemCount() == topPosition + 1 ? topPosition : topPosition + 1);
-        if (!DateUtil.compareSameDay(messageTop.getDateTime(), messageOut.getDateTime())
-                && mDateTopIndicator != null)
-            mDateTopIndicator.setText(DateUtil.formatDate(messageTop.getDateTime()));
+        if (messageTop.getType() != ChatWrapper.WrapperType.DATE && messageOut.getType() != ChatWrapper.WrapperType.DATE) {
+            if (!DateUtil.compareSameDay(messageTop.getMessage().getDateTime(), messageOut.getMessage().getDateTime())
+                    && mDateTopIndicator != null)
+                mDateTopIndicator.setText(DateUtil.formatDate(messageTop.getMessage().getDateTime()));
+        }
     }
 
-    private RecyclerView.Adapter getAdapter() {
+    private ChatAdapter getAdapter() {
         if (mAdapter == null) mAdapter = new ChatAdapter();
         return mAdapter;
-    }
-
-    public void setOnLoadMoreItemListener(OnLoadMoreItemsListener onLoadMoreItemsListener) {
-        this.mOnLoadMoreItemsListener = onLoadMoreItemsListener;
     }
 
     private void registerUserTextInputListener(EditText editText) {
@@ -139,5 +145,40 @@ public class MSChatView extends View {
                 }
             }
         });
+    }
+
+    @Override
+    public void setPresenter(MSChatPresenter presenter) {
+        this.mPresenter = presenter;
+    }
+
+    @Override
+    public void showMessage(Message message) {
+        getAdapter().addMessage(message);
+    }
+
+    @Override
+    public void showListMessageMerge(List<Message> messages) {
+        getAdapter().addListMessage(messages);
+    }
+
+    @Override
+    public void showListMessageReplace(List<Message> messages) {
+        getAdapter().replaceMessage(messages);
+    }
+
+    @Override
+    public void showError(@Nullable String messageError) {
+        Toast.makeText(getContext(), messageError, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showError(@Nullable int messageError) {
+        Toast.makeText(getContext(), messageError, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void setOnLoadMoreItemsListener(OnLoadMoreItemsListener onLoadMoreItemsListener) {
+        this.mOnLoadMoreItemsListener = onLoadMoreItemsListener;
     }
 }
