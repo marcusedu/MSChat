@@ -21,15 +21,16 @@
         android:id="@+id/msgTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp" />
-
-<!--    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:maxHeight="70dp"
-        android:visibility="gone" />-->
+        android:textIsSelectable="true" />
+
+    <!--    <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:maxHeight="70dp"
+            android:visibility="gone" />-->
 
     <TextView
         android:id="@+id/timeTextView"
