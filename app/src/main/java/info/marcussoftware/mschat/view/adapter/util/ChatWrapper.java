@@ -76,7 +76,7 @@ public class ChatWrapper {
             return this;
         }
 
-        public Builder setOtherMessage(Calendar date) {
+        public Builder setDateMessage(Calendar date) {
             if (mChatWrapper.mWrapperType == null) {
                 mChatWrapper.mWrapperType = WrapperType.DATE;
                 mChatWrapper.date = date;
