@@ -36,7 +36,6 @@
             android:maxLines="7"
             android:padding="12dp"
             android:scrollbars="vertical"
-            android:text="Bacon ipsum dolor amet frankfurter ground round corned beef kielbasa. Pastrami burgdoggen alcatra, short loin cupim ham pig corned beef strip steak kielbasa turducken. Jowl pancetta buffalo kevin venison t-bone. Picanha cow turkey doner pig filet mignon capicola jowl beef ribs. Brisket chicken biltong, jowl prosciutto pig meatball porchetta ribeye tail boudin tenderloin kevin. Landjaeger pig short ribs turkey, jerky ham kielbasa andouille."
             android:textSize="16sp" />
 
         <ImageButton
@@ -60,8 +59,8 @@
         android:paddingEnd="10dp"
         android:paddingStart="10dp"
         android:paddingTop="4dp"
-        android:text="Hoje"
         android:textColor="#FFA"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:visibility="invisible" />
 
 </RelativeLayout>
