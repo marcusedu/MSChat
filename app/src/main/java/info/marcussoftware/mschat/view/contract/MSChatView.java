@@ -24,4 +24,6 @@ public interface MSChatView extends BaseView<MSChatPresenter> {
     void showError(@Nullable int messageError);
 
     void setOnLoadMoreItemsListener(OnLoadMoreItemsListener onLoadMoreItemsListener);
+
+    void setSenderUserID(String userId);
 }
