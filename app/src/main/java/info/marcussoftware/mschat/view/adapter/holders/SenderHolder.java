@@ -1,6 +1,8 @@
 package info.marcussoftware.mschat.view.adapter.holders;
 
+import android.view.Gravity;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import info.marcussoftware.mschat.R;
@@ -19,10 +21,10 @@ public class SenderHolder extends ChatHolder {
 
     public SenderHolder(View itemView) {
         super(itemView);
-        mView = itemView;
-        mName = mView.findViewById(R.id.userNameTextView);
-        mMsg = mView.findViewById(R.id.msgTextView);
-        mTime = mView.findViewById(R.id.timeTextView);
+        mView = itemView.findViewById(R.id.balloon);
+        mName = itemView.findViewById(R.id.userNameTextView);
+        mMsg = itemView.findViewById(R.id.msgTextView);
+        mTime = itemView.findViewById(R.id.timeTextView);
     }
 
     @Override
@@ -31,6 +33,10 @@ public class SenderHolder extends ChatHolder {
             mName.setVisibility(View.GONE);
             mMsg.setText(chatWrapper.getMessage().getMessage());
             mTime.setText(DateUtil.formatTime(chatWrapper.getMessage().getDateTime()));
+            mView.setBackground(mView.getContext().getResources().getDrawable(R.drawable.background_sender_message));
+            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(-2, -2);
+            params.gravity = Gravity.END;
+            mView.setLayoutParams(params);
         }
     }
 }
