@@ -113,7 +113,8 @@ public class MSChatView extends FrameLayout implements info.marcussoftware.mscha
                                 break;
                             case RecyclerView.SCROLL_STATE_SETTLING:
                             case RecyclerView.SCROLL_STATE_DRAGGING:
-                                if (mDateTopIndicator.getVisibility() != VISIBLE) {
+                                if (mDateTopIndicator.getVisibility() != VISIBLE
+                                        && !mDateTopIndicator.getText().toString().isEmpty()) {
                                     mHandler.removeCallbacks(hideDateIndicator);
                                     AnimateUtil.animateShowView(mDateTopIndicator);
                                 }
@@ -145,12 +146,8 @@ public class MSChatView extends FrameLayout implements info.marcussoftware.mscha
         LinearLayoutManager llm = (LinearLayoutManager) mRecyclerView.getLayoutManager();
         int topPosition = llm.findFirstCompletelyVisibleItemPosition();
         ChatWrapper messageTop = mAdapter.getMessage(topPosition);
-        ChatWrapper messageOut = mAdapter
-                .getMessage(mAdapter.getItemCount() == topPosition + 1 ? topPosition : topPosition + 1);
-        if (messageTop.getType() != ChatWrapper.WrapperType.DATE && messageOut.getType() != ChatWrapper.WrapperType.DATE) {
-            if (!DateUtil.compareSameDay(messageTop.getMessage().getDateTime(), messageOut.getMessage().getDateTime())
-                    && mDateTopIndicator != null)
-                mDateTopIndicator.setText(DateUtil.formatDate(messageTop.getMessage().getDateTime()));
+        if (messageTop.getType() != ChatWrapper.WrapperType.DATE) {
+            mDateTopIndicator.setText(DateUtil.formatDate(messageTop.getMessage().getDateTime()));
         }
     }
 
