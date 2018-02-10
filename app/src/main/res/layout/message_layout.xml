@@ -27,6 +27,7 @@
             android:id="@+id/msgTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/gray80"
             android:maxWidth="220dp"
             android:textIsSelectable="true" />
 
