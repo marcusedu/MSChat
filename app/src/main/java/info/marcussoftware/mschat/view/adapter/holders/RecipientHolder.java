@@ -3,7 +3,6 @@ package info.marcussoftware.mschat.view.adapter.holders;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import info.marcussoftware.mschat.R;
@@ -30,7 +29,8 @@ public class RecipientHolder extends ChatHolder {
     @Override
     public void bindData(ChatWrapper chatWrapper) {
         if (chatWrapper.getType() == ChatWrapper.WrapperType.SENDED_BY_OTHER) {
-            mName.setVisibility(View.GONE);
+            mName.setVisibility(View.VISIBLE);
+            mName.setText(chatWrapper.getMessage().getUserName());
             mMsg.setText(chatWrapper.getMessage().getMessage());
             mTime.setText(DateUtil.formatTime(chatWrapper.getMessage().getDateTime()));
             mView.setBackground(mView.getContext().getResources().getDrawable(R.drawable.background_recipient_message));
