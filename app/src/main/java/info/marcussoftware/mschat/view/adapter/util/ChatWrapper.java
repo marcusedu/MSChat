@@ -60,6 +60,7 @@ public class ChatWrapper {
             if (mChatWrapper.mWrapperType == null) {
                 mChatWrapper.mWrapperType = WrapperType.SENDED_BY_ME;
                 mChatWrapper.message = message;
+                mChatWrapper.date = message.getDateTime();
             } else {
                 throw new IllegalStateException("");
             }
@@ -70,6 +71,7 @@ public class ChatWrapper {
             if (mChatWrapper.mWrapperType == null) {
                 mChatWrapper.mWrapperType = WrapperType.SENDED_BY_OTHER;
                 mChatWrapper.message = message;
+                mChatWrapper.date = message.getDateTime();
             } else {
                 throw new IllegalStateException("");
             }
