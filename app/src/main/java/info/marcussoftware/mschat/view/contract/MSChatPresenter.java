@@ -2,6 +2,8 @@ package info.marcussoftware.mschat.view.contract;
 
 import android.support.annotation.Nullable;
 
+import java.util.Calendar;
+
 import info.marcussoftware.mschat.BasePresenter;
 import info.marcussoftware.mschat.interfaces.Message;
 
@@ -12,5 +14,5 @@ import info.marcussoftware.mschat.interfaces.Message;
 public interface MSChatPresenter extends BasePresenter {
     void userTyping(boolean typing, @Nullable String text);
 
-    void userSendMessage(Message message);
+    void userSendMessage(Calendar instance, String s);
 }
