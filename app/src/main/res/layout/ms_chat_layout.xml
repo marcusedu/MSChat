@@ -10,9 +10,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/baseText"
-        android:layout_marginBottom="-12dp"
-        android:background="#bdbdbd"
-        app:reverseLayout="true" />
+        android:layout_marginBottom="-4dp"
+        android:scrollbarStyle="outsideOverlay"
+        android:transcriptMode="normal"
+        android:drawSelectorOnTop="false"
+        android:background="#bdbdbd" />
 
     <LinearLayout
         android:id="@+id/baseText"

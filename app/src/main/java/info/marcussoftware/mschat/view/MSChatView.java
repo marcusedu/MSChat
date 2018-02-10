@@ -93,8 +93,22 @@ public class MSChatView extends FrameLayout implements info.marcussoftware.mscha
     }
 
     private void initRecyclerView() {
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        LinearLayoutManager llm = new LinearLayoutManager(getContext());
+        llm.setStackFromEnd(true);
+        mRecyclerView.setLayoutManager(llm);
         mRecyclerView.setAdapter(getAdapter());
+        getAdapter().registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                super.onItemRangeInserted(positionStart, itemCount);
+                int msgs = getAdapter().getItemCount();
+                int las = llm.findLastVisibleItemPosition();
+                if (las == -1 ||
+                        (positionStart >= (msgs - 1) && las == (positionStart - 1)))
+                    mRecyclerView.scrollToPosition(positionStart);
+            }
+        });
         mRecyclerView.addOnScrollListener(getScrollListener());
     }
 
