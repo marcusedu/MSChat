@@ -35,4 +35,11 @@ public class DateUtil {
     public static String formatTime(Calendar date) {
         return simpleTimeFormat.format(date.getTime());
     }
+
+    public static long parseDateKey(Calendar dateTime) {
+        dateTime.set(Calendar.HOUR, 0);
+        dateTime.set(Calendar.MINUTE, 0);
+        dateTime.set(Calendar.MILLISECOND, 0);
+        return dateTime.getTimeInMillis();
+    }
 }
