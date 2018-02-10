@@ -3,6 +3,7 @@ package info.marcussoftware.mschat.view.adapter;
 import android.support.annotation.NonNull;
 import android.support.v4.util.LongSparseArray;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -29,6 +30,7 @@ import static info.marcussoftware.mschat.view.adapter.util.ChatWrapper.WrapperTy
 public class ChatAdapter extends RecyclerView.Adapter<ChatHolder> {
     private ArrayList<ChatWrapper> messages = new ArrayList<>();
     private LongSparseArray<ArrayList<ChatWrapper>> mSparse = new LongSparseArray<>();
+    private String myUserId;
 
     @Override
     public int getItemViewType(int position) {
@@ -69,7 +71,20 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatHolder> {
     }
 
     public void addMessage(Message message) {
-        ChatWrapper mWrapper = processMessage(message, SENDED_BY_ME);
+        if (getMyUserId() == null) {
+            Log.w("ChatAdapter", "addMessage: User id not set", new RuntimeException("You need set user id to show message sended by user correctly"));
+        }
+        ChatWrapper mWrapper;
+        if (messages.isEmpty()
+                || !DateUtil.compareSameDay(messages.get(messages.size() - 1).getDate(), message.getDateTime())) {
+            mWrapper = processMessage(message, DATE);
+            messages.add(mWrapper);
+            notifyItemInserted(messages.indexOf(mWrapper));
+        }
+        if (message.getUserId().equals(myUserId))
+            mWrapper = processMessage(message, SENDED_BY_ME);
+        else
+            mWrapper = processMessage(message, SENDED_BY_OTHER);
         messages.add(mWrapper);
         notifyItemInserted(messages.indexOf(mWrapper));
     }
@@ -116,19 +131,33 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatHolder> {
     }
 
     private List<ChatWrapper> processMessages(List<Message> messageList) {
+        if (getMyUserId() == null) {
+            Log.w("ChatAdapter", "addMessage: User id not set", new RuntimeException("You need set user id to show message sended by user correctly"));
+        }
         long datekey;
         ArrayList<ChatWrapper> chatWrappers = new ArrayList<>();
         for (Message message : messageList) {
             datekey = DateUtil.parseDateKey(message.getDateTime());
             if (getChatWrapperList(datekey).isEmpty()) {
                 getChatWrapperList(datekey).add(0, processMessage(message, DATE));
-            } else {
+            } else if (message.getUserId().equals(myUserId)) {
                 getChatWrapperList(datekey).add(processMessage(message, SENDED_BY_ME));
+            } else {
+                getChatWrapperList(datekey).add(processMessage(message, SENDED_BY_OTHER));
             }
         }
         for (int i = 0; i < mSparse.size(); i++) {
             chatWrappers.addAll(mSparse.valueAt(i));
         }
         return chatWrappers;
+    }
+
+    public String getMyUserId() {
+        return myUserId;
+    }
+
+    public ChatAdapter setMyUserId(String myUserId) {
+        this.myUserId = myUserId;
+        return this;
     }
 }
