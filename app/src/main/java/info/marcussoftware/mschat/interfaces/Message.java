@@ -7,13 +7,28 @@ import java.util.Calendar;
  */
 
 public interface Message {
+    /**
+     * @return A calendar with datetime that message has sended
+     */
     Calendar getDateTime();
 
+    /**
+     * @return Name of user that sended the message
+     */
     String getUserName();
 
+    /**
+     * @return Id of user that sended the message
+     */
     String getUserId();
 
+    /**
+     * @return Body of message
+     */
     String getMessage();
 
+    /**
+     * @return Id of message
+     */
     String getMessageId();
 }
