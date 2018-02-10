@@ -1,16 +1,19 @@
 package info.marcussoftware.mschat.view;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
-import android.view.View;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,7 +33,7 @@ import info.marcussoftware.mschat.view.contract.MSChatPresenter;
  * Created by Marcus Eduardo - marcusedu7@gmail.com on 21/01/2018.
  */
 
-public class MSChatView extends View implements info.marcussoftware.mschat.view.contract.MSChatView {
+public class MSChatView extends FrameLayout implements info.marcussoftware.mschat.view.contract.MSChatView {
     private RecyclerView mRecyclerView;
     private TextView mDateTopIndicator;
     private EditText mMessageEditor;
@@ -43,8 +46,31 @@ public class MSChatView extends View implements info.marcussoftware.mschat.view.
 
     public MSChatView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        init();
         initAttributes(attrs);
-        initViews(inflate(context, R.layout.ms_chat_layout, null));
+    }
+
+    public MSChatView(@NonNull Context context) {
+        super(context);
+        init();
+    }
+
+    public MSChatView(@NonNull Context context, @Nullable AttributeSet attrs) {
+        super(context, attrs);
+        init();
+        initAttributes(attrs);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    public MSChatView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+        init();
+        initAttributes(attrs);
+    }
+
+    private void init() {
+        inflate(getContext(), R.layout.ms_chat_layout, this);
+        initViews();
         initRecyclerView();
     }
 
@@ -52,11 +78,11 @@ public class MSChatView extends View implements info.marcussoftware.mschat.view.
 
     }
 
-    private void initViews(View v) {
-        mRecyclerView = v.findViewById(R.id.chatRecyclerView);
-        mDateTopIndicator = v.findViewById(R.id.chatDateTopIndicator);
-        mMessageEditor = v.findViewById(R.id.chatEditText);
-        mSenderButton = v.findViewById(R.id.chatSendButton);
+    private void initViews() {
+        mRecyclerView = findViewById(R.id.chatRecyclerView);
+        mDateTopIndicator = findViewById(R.id.chatDateTopIndicator);
+        mMessageEditor = findViewById(R.id.chatEditText);
+        mSenderButton = findViewById(R.id.chatSendButton);
 
         registerUserTextInputListener(mMessageEditor);
     }
