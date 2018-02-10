@@ -88,7 +88,10 @@ public class MSChatView extends FrameLayout implements info.marcussoftware.mscha
         mMessageEditor = findViewById(R.id.chatEditText);
         mSenderButton = findViewById(R.id.chatSendButton);
         mSenderButton.setOnClickListener(v -> {
-            mPresenter.userSendMessage(Calendar.getInstance(), mMessageEditor.getText().toString());
+            if (mPresenter != null)
+                mPresenter.userSendMessage(Calendar.getInstance(), mMessageEditor.getText().toString());
+            else
+                throw new IllegalStateException("You need implement and set MSChatPresenter!");
             mMessageEditor.setText("");
         });
         mScrollCounter = findViewById(R.id.scrollBottom);
@@ -196,6 +199,8 @@ public class MSChatView extends FrameLayout implements info.marcussoftware.mscha
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (mPresenter != null)
                     mPresenter.userTyping(count > 0, s.toString());
+                else
+                    throw new IllegalStateException("You need implement and set MSChatPresenter!");
             }
 
             @Override
@@ -242,5 +247,10 @@ public class MSChatView extends FrameLayout implements info.marcussoftware.mscha
     @Override
     public void setOnLoadMoreItemsListener(OnLoadMoreItemsListener onLoadMoreItemsListener) {
         this.mOnLoadMoreItemsListener = onLoadMoreItemsListener;
+    }
+
+    @Override
+    public void setSenderUserID(String userId) {
+        getAdapter().setMyUserId(userId);
     }
 }
