@@ -4,6 +4,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import info.marcussoftware.mschat.R;
 import info.marcussoftware.mschat.util.DateUtil;
 import info.marcussoftware.mschat.view.adapter.util.ChatWrapper;
 
@@ -16,7 +17,7 @@ public class DateHeaderHolder extends ChatHolder {
 
     public DateHeaderHolder(View itemView) {
         super(itemView);
-        this.mTextView = (TextView) itemView;
+        this.mTextView = itemView.findViewById(R.id.dateTextView);
     }
 
     @Override
