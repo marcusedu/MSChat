@@ -18,6 +18,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Calendar;
 import java.util.List;
 
 import info.marcussoftware.mschat.R;
@@ -83,6 +84,10 @@ public class MSChatView extends FrameLayout implements info.marcussoftware.mscha
         mDateTopIndicator = findViewById(R.id.chatDateTopIndicator);
         mMessageEditor = findViewById(R.id.chatEditText);
         mSenderButton = findViewById(R.id.chatSendButton);
+        mSenderButton.setOnClickListener(v -> {
+            mPresenter.userSendMessage(Calendar.getInstance(), mMessageEditor.getText().toString());
+            mMessageEditor.setText("");
+        });
 
         registerUserTextInputListener(mMessageEditor);
     }
@@ -96,19 +101,23 @@ public class MSChatView extends FrameLayout implements info.marcussoftware.mscha
     private RecyclerView.OnScrollListener getScrollListener() {
         if (mScrollListener == null)
             mScrollListener = new RecyclerView.OnScrollListener() {
+                private Runnable hideDateIndicator = () -> AnimateUtil.animateHideView(mDateTopIndicator);
+
                 @Override
                 public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                     super.onScrollStateChanged(recyclerView, newState);
                     if (mDateTopIndicator != null)
                         switch (newState) {
                             case RecyclerView.SCROLL_STATE_IDLE:
-                                mHandler.postDelayed(
-                                        () -> AnimateUtil.animateHideView(mDateTopIndicator),
-                                        3500);
+                                mHandler.postDelayed(hideDateIndicator, 3500);
+                                break;
                             case RecyclerView.SCROLL_STATE_SETTLING:
-                                AnimateUtil.animateShowView(mDateTopIndicator);
                             case RecyclerView.SCROLL_STATE_DRAGGING:
-                                AnimateUtil.animateShowView(mDateTopIndicator);
+                                if (mDateTopIndicator.getVisibility() != VISIBLE) {
+                                    mHandler.removeCallbacks(hideDateIndicator);
+                                    AnimateUtil.animateShowView(mDateTopIndicator);
+                                }
+                                break;
                         }
                 }
 
@@ -159,7 +168,8 @@ public class MSChatView extends FrameLayout implements info.marcussoftware.mscha
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+                if (mPresenter != null)
+                    mPresenter.userTyping(count > 0, s.toString());
             }
 
             @Override
