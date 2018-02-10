@@ -11,10 +11,10 @@
         android:layout_height="match_parent"
         android:layout_above="@id/baseText"
         android:layout_marginBottom="-4dp"
-        android:scrollbarStyle="outsideOverlay"
-        android:transcriptMode="normal"
+        android:background="#bdbdbd"
         android:drawSelectorOnTop="false"
-        android:background="#bdbdbd" />
+        android:scrollbarStyle="outsideOverlay"
+        android:transcriptMode="normal" />
 
     <LinearLayout
         android:id="@+id/baseText"
@@ -64,5 +64,35 @@
         android:textColor="#FFA"
         android:textSize="18sp"
         android:visibility="invisible" />
+
+    <FrameLayout
+        android:id="@+id/scrollBottom"
+        android:layout_width="34dp"
+        android:layout_height="34dp"
+        android:layout_above="@id/baseText"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="16dp"
+        android:visibility="gone"
+        android:layout_marginEnd="10dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="10dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/background_date"
+            android:src="@drawable/ic_keyboard_arrow_down_black_24dp" />
+
+        <TextView
+            android:id="@+id/counter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:background="@drawable/background_counter"
+            android:padding="2dp"
+            android:textColor="@color/black"
+            android:textSize="10sp"
+            android:visibility="gone" />
+    </FrameLayout>
 
 </RelativeLayout>

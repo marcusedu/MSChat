@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -41,9 +42,11 @@ public class MSChatView extends FrameLayout implements info.marcussoftware.mscha
     private ImageButton mSenderButton;
     private ChatAdapter mAdapter;
     private RecyclerView.OnScrollListener mScrollListener;
+    private View mScrollCounter;
     private OnLoadMoreItemsListener mOnLoadMoreItemsListener;
     private Handler mHandler = new Handler(Looper.myLooper());
     private MSChatPresenter mPresenter;
+    LinearLayoutManager llm = new LinearLayoutManager(getContext());
 
     public MSChatView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
@@ -88,12 +91,12 @@ public class MSChatView extends FrameLayout implements info.marcussoftware.mscha
             mPresenter.userSendMessage(Calendar.getInstance(), mMessageEditor.getText().toString());
             mMessageEditor.setText("");
         });
+        mScrollCounter = findViewById(R.id.scrollBottom);
 
         registerUserTextInputListener(mMessageEditor);
     }
 
     private void initRecyclerView() {
-        LinearLayoutManager llm = new LinearLayoutManager(getContext());
         llm.setStackFromEnd(true);
         mRecyclerView.setLayoutManager(llm);
         mRecyclerView.setAdapter(getAdapter());
@@ -110,6 +113,17 @@ public class MSChatView extends FrameLayout implements info.marcussoftware.mscha
             }
         });
         mRecyclerView.addOnScrollListener(getScrollListener());
+    }
+
+    private void showScrollBottomCounter(int count) {
+//        TextView counter = mScrollCounter.findViewById(R.id.counter);
+//        counter.setText(String.valueOf(count));
+        if (mScrollCounter.getVisibility() != VISIBLE)
+            AnimateUtil.animateShowView(mScrollCounter);
+        mScrollCounter.setOnClickListener(v -> {
+            mRecyclerView.scrollToPosition(getAdapter().getItemCount() - 1);
+            AnimateUtil.animateHideView(mScrollCounter);
+        });
     }
 
     private RecyclerView.OnScrollListener getScrollListener() {
@@ -150,6 +164,8 @@ public class MSChatView extends FrameLayout implements info.marcussoftware.mscha
                     } else if (dy < 0 || dy > 0) {
                         //List scroll up ou down
                         updateDateTopIndicator();
+                        if (llm.findLastVisibleItemPosition() < getAdapter().getItemCount())
+                            showScrollBottomCounter(0);
                     }
                 }
             };
@@ -157,7 +173,6 @@ public class MSChatView extends FrameLayout implements info.marcussoftware.mscha
     }
 
     private void updateDateTopIndicator() {
-        LinearLayoutManager llm = (LinearLayoutManager) mRecyclerView.getLayoutManager();
         int topPosition = llm.findFirstCompletelyVisibleItemPosition();
         ChatWrapper messageTop = mAdapter.getMessage(topPosition);
         if (messageTop.getType() != ChatWrapper.WrapperType.DATE) {
