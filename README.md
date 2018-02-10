@@ -2,6 +2,8 @@
 MSChat á uma biblioteca para dar suporte a criação de chat facilmente
 Simplificamos o processo de criação de chat, é uma otima lib para validar alguma ideia ou mesmo para uso definitivo.
 
+![alt text](https://github.com/marcusedu/MSChat/blob/master/chatexample/chat_example.gif "Exemplo")
+
 ### Alguns recursos:
 - Feed de chat
 - Balão que marca o dia da conversa
@@ -71,7 +73,8 @@ Busque sua referencia no codigo.
         msChatView = findViewById(R.id.mainMSChat);
         //Você precisa implementar e passar um presenter, do contrario a lib irá lançar uma exceção
         msChatView.setPresenter(this);
-        //Você precisa informar qual o id do usuario que está enviando a mensagem para que a mensagem seja exibida como dele
+        //Você precisa informar qual o id do usuario que está enviando a mensagem
+        //para que a mensagem seja exibida como dele
         msChatView.setSenderUserID(myUserId);
     }
     
@@ -83,7 +86,8 @@ Busque sua referencia no codigo.
 
     @Override
     public void userSendMessage(Calendar instance, String s) {
-        //Assim que o usuario clica em enviar uma mensagem, você a recebe aqui, ela não vai automaticamente para o feed.
+        //Assim que o usuario clica em enviar uma mensagem,
+        //você a recebe aqui, ela não vai automaticamente para o feed.
         //Para que você possa processar a mensagem antes de enviar.
         
         //Você precisa implementar a interface Message.
