@@ -1,42 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/background_sender_message"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/userNameTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ellipsize="end"
-        android:gravity="start"
-        android:maxLines="1"
-        android:textAlignment="textStart"
-        android:textSize="14sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/msgTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:textIsSelectable="true" />
-
-    <!--    <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:maxHeight="70dp"
-            android:visibility="gone" />-->
-
-    <TextView
-        android:id="@+id/timeTextView"
+    <LinearLayout
+        android:id="@+id/balloon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
-        android:textSize="12sp" />
+        android:layout_margin="8dp"
+        android:background="@drawable/background_sender_message"
+        android:orientation="vertical"
+        android:padding="16dp">
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/userNameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:ellipsize="end"
+            android:gravity="start"
+            android:maxLines="1"
+            android:maxWidth="200dp"
+            android:textAlignment="textStart"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/msgTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxWidth="220dp"
+            android:textIsSelectable="true" />
+
+        <!--    <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:maxHeight="70dp"
+                android:visibility="gone" />-->
+
+        <TextView
+            android:id="@+id/timeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+</FrameLayout>
