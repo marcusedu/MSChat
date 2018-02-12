@@ -6,4 +6,5 @@
     <color name="sender_color">#69f0ae</color>
     <color name="grey_300">#e0e0e0</color>
     <color name="black">#000</color>
+    <color name="gray80">#424242</color>
 </resources>

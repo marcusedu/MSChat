@@ -1,6 +1,7 @@
 package info.marcussoftware.mschat.view;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
@@ -16,6 +17,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,6 +50,9 @@ public class MSChatView extends FrameLayout implements info.marcussoftware.mscha
     private Handler mHandler = new Handler(Looper.myLooper());
     private MSChatPresenter mPresenter;
     LinearLayoutManager llm = new LinearLayoutManager(getContext());
+    private ImageView chatBackground;
+    private Drawable mBackgroundDrawable;
+    private int mBackgroundColor;
 
     public MSChatView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
@@ -88,13 +94,20 @@ public class MSChatView extends FrameLayout implements info.marcussoftware.mscha
         mMessageEditor = findViewById(R.id.chatEditText);
         mSenderButton = findViewById(R.id.chatSendButton);
         mSenderButton.setOnClickListener(v -> {
+            String msg = mMessageEditor.getText().toString();
+            mMessageEditor.setText("");
             if (mPresenter != null)
-                mPresenter.userSendMessage(Calendar.getInstance(), mMessageEditor.getText().toString());
+                mPresenter.userSendMessage(Calendar.getInstance(), msg);
             else
                 throw new IllegalStateException("You need implement and set MSChatPresenter!");
-            mMessageEditor.setText("");
         });
         mScrollCounter = findViewById(R.id.scrollBottom);
+        chatBackground = findViewById(R.id.chatBackground);
+        if (mBackgroundDrawable != null || mBackgroundColor == 0) {
+
+            chatBackground.setImageDrawable(mBackgroundDrawable);
+            chatBackground.setBackgroundColor(mBackgroundColor);
+        }
 
         registerUserTextInputListener(mMessageEditor);
     }
@@ -252,5 +265,25 @@ public class MSChatView extends FrameLayout implements info.marcussoftware.mscha
     @Override
     public void setSenderUserID(String userId) {
         getAdapter().setMyUserId(userId);
+    }
+
+    @Override
+    public void setBackground(Drawable background) {
+        mBackgroundDrawable = background;
+    }
+
+    @Override
+    public void setBackgroundColor(int color) {
+        mBackgroundColor = color;
+    }
+
+    @Override
+    public void setBackgroundResource(int resid) {
+        mBackgroundDrawable = getResources().getDrawable(resid);
+    }
+
+    @Override
+    public void setBackgroundDrawable(Drawable background) {
+        mBackgroundDrawable = background;
     }
 }
