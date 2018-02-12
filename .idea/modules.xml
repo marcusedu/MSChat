@@ -3,8 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/MSChat.iml" filepath="$PROJECT_DIR$/MSChat.iml" />
-      <module fileurl="file://C:\MarcusSoftware\MSChat\MarcusSoftware.iml" filepath="C:\MarcusSoftware\MSChat\MarcusSoftware.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/chatexample/chatexample.iml" filepath="$PROJECT_DIR$/chatexample/chatexample.iml" />
     </modules>
   </component>
 </project>
