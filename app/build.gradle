@@ -28,7 +28,7 @@ uploadArchives {
         mavenDeployer {
 //            repository(url: "file:///C:/gradle/mschat/")
 //            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/")
-            repository(url: "https://oss.sonatype.org/content/repositories/snapshots/")
+            repository(url: "https://oss.sonatype.org/content/repositories/snapshots")
             pom.groupId = GROUP
             pom.artifactId = POM_ARTIFACT_ID
             pom.version = VERSION_NAME
