@@ -35,7 +35,6 @@ compileOptions {
   }
 dependencies {
     //...
-    //Em breve no repositorio maven
     implementation 'info.marcussoftware:mschat:0.1-alpha'
 }
 ```
