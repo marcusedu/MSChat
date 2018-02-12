@@ -1,6 +1,7 @@
 package info.marcussoftware.mschatexample;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
@@ -12,6 +13,7 @@ import info.marcussoftware.mschat.view.contract.MSChatView;
 public class MainActivity extends AppCompatActivity implements MSChatPresenter {
     private MSChatView msChatView;
     private String myUserId = "12";
+    private Handler mHandler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,14 +37,22 @@ public class MainActivity extends AppCompatActivity implements MSChatPresenter {
     @Override
     public void userTyping(boolean typing, @Nullable String text) {
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setSubtitle(typing ? "User typing.." : null);
+            getSupportActionBar().setSubtitle(typing ? "I'm typing.." : null);
         }
     }
 
     @Override
-    public void userSendMessage(Calendar instance, String s) {
+    public void userSendMessage(Calendar dateMessage, String s) {
         MinhaMensagem message = new MinhaMensagem();
-        msChatView.showMessage(message.setDateTime(instance).setMessage(s).setUserName("Marcus").setUserId(myUserId));
-        msChatView.showMessage(message.setDateTime(instance).setMessage(s).setUserName("Cliente").setUserId("13"));
+        msChatView.showMessage(message.setDateTime(dateMessage).setMessage(s).setUserName("Marcus").setUserId(myUserId));
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setSubtitle("User typing..");
+        }
+        mHandler.postDelayed(() -> {
+            msChatView.showMessage(message.setDateTime(dateMessage).setMessage(s).setUserName("Cliente").setUserId("13"));
+            if (getSupportActionBar() != null) {
+                getSupportActionBar().setSubtitle(null);
+            }
+        }, s.length() * 150);
     }
 }
