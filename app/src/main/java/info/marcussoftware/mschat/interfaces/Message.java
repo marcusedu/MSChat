@@ -9,6 +9,18 @@ import java.util.Calendar;
 public abstract class Message {
     protected Calendar dateTime;
     protected String userName, userId, message, messageId;
+    protected Status status;
+
+    public enum Status {PENDING, ERROR, SENDED, RECEIVED, VISUALISED}
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public Message setStatus(Status status) {
+        this.status = status;
+        return this;
+    }
 
     /**
      * Setter dateTime
