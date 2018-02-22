@@ -45,14 +45,16 @@ public class MainActivity extends AppCompatActivity implements MSChatPresenter {
     public void userSendMessage(Calendar dateMessage, String s) {
         MinhaMensagem message = new MinhaMensagem();
         msChatView.showMessage(message.setDateTime(dateMessage).setMessage(s).setUserName("Marcus").setUserId(myUserId));
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setSubtitle("User typing..");
-        }
         mHandler.postDelayed(() -> {
-            msChatView.showMessage(message.setDateTime(dateMessage).setMessage(s).setUserName("Cliente").setUserId("13"));
             if (getSupportActionBar() != null) {
-                getSupportActionBar().setSubtitle(null);
+                getSupportActionBar().setSubtitle("User typing..");
             }
-        }, s.length() * 150);
+            mHandler.postDelayed(() -> {
+                msChatView.showMessage(message.setDateTime(dateMessage).setMessage(s).setUserName("Cliente").setUserId("13"));
+                if (getSupportActionBar() != null) {
+                    getSupportActionBar().setSubtitle(null);
+                }
+            }, s.length() * 150);
+        }, ((int)( Math.random() * 5)) * 1000);
     }
 }
