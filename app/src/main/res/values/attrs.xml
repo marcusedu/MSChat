@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="MSChatView">
+        <attr name="recipientBackgroundTint" format="reference" />
+        <attr name="senderBackgroundTint" format="reference" />
+        <attr name="dateTimeBackgroundTint" format="reference" />
+        <attr name="recipientBackground" format="reference" />
+        <attr name="senderBackground" format="reference" />
+        <attr name="dateTimeBackground" format="reference" />
+        <attr name="textAreaBackground" format="reference" />
+        <attr name="senderMessagePosition" format="enum">
+            <enum name="left" value="8388611" />
+            <enum name="right" value="8388613" />
+        </attr>
+        <attr name="recipientMessagePosition" format="enum">
+            <enum name="left" value="8388611" />
+            <enum name="right" value="8388613" />
+        </attr>
+        <attr name="showSenderName" format="boolean" />
+        <attr name="showRecipientName" format="boolean" />
+    </declare-styleable>
+</resources>
