@@ -94,17 +94,19 @@ public class MSChatStyleHelper {
     }
 
     public void styleDateTime(TextView mTextView) {
+        Drawable temp = mDatetimeBackground.getConstantState().newDrawable();
         if (mDatetimeBackgroundColor != 0) {
-            mDatetimeBackground.setColorFilter(mDatetimeBackgroundColor, PorterDuff.Mode.SRC_ATOP);
+            temp.setColorFilter(mDatetimeBackgroundColor, PorterDuff.Mode.SRC_ATOP);
         }
-        mTextView.setBackground(mDatetimeBackground);
+        mTextView.setBackground(temp);
     }
 
     public void styleSenderMessage(View mView, TextView mName, TextView mMsg, TextView mTime) {
         mName.setVisibility(mShowSenderName ? View.VISIBLE : View.GONE);
+        Drawable temp = mSenderBackground.getConstantState().newDrawable();
         if (mSenderBackgroundColor != 0)
-            mSenderBackground.setColorFilter(mSenderBackgroundColor, PorterDuff.Mode.SRC_ATOP);
-        mView.setBackground(mSenderBackground);
+            temp.setColorFilter(mSenderBackgroundColor, PorterDuff.Mode.SRC_ATOP);
+        mView.setBackground(temp);
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(-2, -2);
         params.gravity = mSenderMessagePosition;
         mView.setLayoutParams(params);
@@ -112,9 +114,10 @@ public class MSChatStyleHelper {
 
     public void styleRecipientMessage(View mView, TextView mName, TextView mMsg, TextView mTime) {
         mName.setVisibility(mShowRecipientName ? View.VISIBLE : View.GONE);
+        Drawable temp = mRecipientBackground.getConstantState().newDrawable();
         if (mRecipientBackgroundColor != 0)
-            mRecipientBackground.setColorFilter(mRecipientBackgroundColor, PorterDuff.Mode.SRC_ATOP);
-        mView.setBackground(mRecipientBackground);
+            temp.setColorFilter(mRecipientBackgroundColor, PorterDuff.Mode.SRC_ATOP);
+        mView.setBackground(temp);
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(-2, -2);
         params.gravity = mRecipientMessagePosition;
         mView.setLayoutParams(params);
