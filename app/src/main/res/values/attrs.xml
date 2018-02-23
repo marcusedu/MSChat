@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="MSChatView">
-        <attr name="recipientBackgroundTint" format="reference" />
-        <attr name="senderBackgroundTint" format="reference" />
-        <attr name="dateTimeBackgroundTint" format="reference" />
+        <attr name="recipientBackgroundColor" format="color" />
+        <attr name="senderBackgroundColor" format="color" />
+        <attr name="dateTimeBackgroundColor" format="color" />
         <attr name="recipientBackground" format="reference" />
         <attr name="senderBackground" format="reference" />
         <attr name="dateTimeBackground" format="reference" />
