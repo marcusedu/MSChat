@@ -30,6 +30,7 @@ public class SenderHolder extends ChatHolder {
         mMsg = itemView.findViewById(R.id.msgTextView);
         mTime = itemView.findViewById(R.id.timeTextView);
         mStatusIV = itemView.findViewById(R.id.messageStatus);
+        mStatusIV.setVisibility(View.VISIBLE);
     }
 
     @Override
