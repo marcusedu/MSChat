@@ -4,6 +4,8 @@ import android.support.annotation.NonNull;
 import android.support.v4.util.LongSparseArray;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.util.SparseArray;
+import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -30,6 +32,7 @@ import static info.marcussoftware.mschat.view.adapter.util.ChatWrapper.WrapperTy
  */
 public class ChatAdapter extends RecyclerView.Adapter<ChatHolder> {
     private final MSChatStyleHelper mStyleHelper;
+    private SparseIntArray indexMessageSparseArray = new SparseIntArray();
     private ArrayList<ChatWrapper> messages = new ArrayList<>();
     private LongSparseArray<ArrayList<ChatWrapper>> mSparse = new LongSparseArray<>();
     private String myUserId;
@@ -99,8 +102,19 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatHolder> {
             mWrapper = processMessage(message, SENDED_BY_ME);
         else
             mWrapper = processMessage(message, SENDED_BY_OTHER);
-        messages.add(mWrapper);
-        notifyItemInserted(messages.indexOf(mWrapper));
+        int msgIndex = indexMessageSparseArray.get(mWrapper.getMessage().getMessageId().hashCode(), 0);
+        if (msgIndex == 0) {
+            messages.add(mWrapper);
+            msgIndex = messages.indexOf(mWrapper);
+            indexMessageSparseArray.put(mWrapper.getMessage().getMessageId().hashCode(), msgIndex);
+            notifyItemInserted(indexMessageSparseArray.get(mWrapper.getMessage().getMessageId().hashCode()));
+        } else {
+            messages.get(msgIndex)
+                    .getMessage()
+                    .setMessage(message.getMessage())
+                    .setStatus(message.getStatus());
+            notifyItemChanged(msgIndex);
+        }
     }
 
     @NonNull
