@@ -5,7 +5,4 @@ package info.marcussoftware.mschat;
  */
 
 public interface BasePresenter {
-    void start();
-
-    void stop();
 }
