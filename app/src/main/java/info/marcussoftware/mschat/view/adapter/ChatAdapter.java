@@ -13,6 +13,7 @@ import java.util.List;
 import info.marcussoftware.mschat.R;
 import info.marcussoftware.mschat.interfaces.Message;
 import info.marcussoftware.mschat.util.DateUtil;
+import info.marcussoftware.mschat.util.MSChatStyleHelper;
 import info.marcussoftware.mschat.view.adapter.holders.ChatHolder;
 import info.marcussoftware.mschat.view.adapter.holders.DateHeaderHolder;
 import info.marcussoftware.mschat.view.adapter.holders.RecipientHolder;
@@ -28,9 +29,14 @@ import static info.marcussoftware.mschat.view.adapter.util.ChatWrapper.WrapperTy
  * Created by Marcus Eduardo - marcusedu7@gmail.com on 21/01/2018.
  */
 public class ChatAdapter extends RecyclerView.Adapter<ChatHolder> {
+    private final MSChatStyleHelper mStyleHelper;
     private ArrayList<ChatWrapper> messages = new ArrayList<>();
     private LongSparseArray<ArrayList<ChatWrapper>> mSparse = new LongSparseArray<>();
     private String myUserId;
+
+    public ChatAdapter(MSChatStyleHelper msChatStyleHelper) {
+        mStyleHelper = msChatStyleHelper;
+    }
 
     @Override
     public int getItemViewType(int position) {
@@ -40,13 +46,21 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatHolder> {
     @Override
     public ChatHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == DATE.getValue())
-            return new DateHeaderHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_date_header, parent, false));
+            return new DateHeaderHolder(
+                    LayoutInflater.from(parent.getContext()).inflate(R.layout.item_date_header,
+                            parent, false)).style(mStyleHelper);
 
         if (viewType == SENDED_BY_ME.getValue())
-            return new SenderHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.message_layout, parent, false));
+            return new SenderHolder(
+                    LayoutInflater.from(parent.getContext()).inflate(R.layout.message_layout,
+                            parent,
+                            false)).style(mStyleHelper);
 
         if (viewType == SENDED_BY_OTHER.getValue())
-            return new RecipientHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.message_layout, parent, false));
+            return new RecipientHolder(
+                    LayoutInflater.from(parent.getContext()).inflate(R.layout.message_layout,
+                            parent,
+                            false)).style(mStyleHelper);
 
         return null;
     }

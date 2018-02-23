@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import info.marcussoftware.mschat.R;
 import info.marcussoftware.mschat.util.DateUtil;
+import info.marcussoftware.mschat.util.MSChatStyleHelper;
 import info.marcussoftware.mschat.view.adapter.util.ChatWrapper;
 
 /**
@@ -27,5 +28,11 @@ public class DateHeaderHolder extends ChatHolder {
         } else {
             Log.d(getClass().getSimpleName(), "bindData: Invalide Wrapper type");
         }
+    }
+
+    @Override
+    public ChatHolder style(MSChatStyleHelper mStyleHelper) {
+        mStyleHelper.styleDateTime(mTextView);
+        return this;
     }
 }

@@ -1,5 +1,6 @@
 package info.marcussoftware.mschat.view.adapter.holders;
 
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -7,6 +8,7 @@ import android.widget.TextView;
 
 import info.marcussoftware.mschat.R;
 import info.marcussoftware.mschat.util.DateUtil;
+import info.marcussoftware.mschat.util.MSChatStyleHelper;
 import info.marcussoftware.mschat.view.adapter.util.ChatWrapper;
 
 /**
@@ -29,14 +31,17 @@ public class RecipientHolder extends ChatHolder {
     @Override
     public void bindData(ChatWrapper chatWrapper) {
         if (chatWrapper.getType() == ChatWrapper.WrapperType.SENDED_BY_OTHER) {
-            mName.setVisibility(View.VISIBLE);
             mName.setText(chatWrapper.getMessage().getUserName());
             mMsg.setText(chatWrapper.getMessage().getMessage());
             mTime.setText(DateUtil.formatTime(chatWrapper.getMessage().getDateTime()));
-            mView.setBackground(mView.getContext().getResources().getDrawable(R.drawable.background_recipient_message));
-            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(-2, -2);
-            params.gravity = Gravity.START;
-            mView.setLayoutParams(params);
+        } else {
+            Log.d(getClass().getSimpleName(), "bindData: Invalide Wrapper type");
         }
+    }
+
+    @Override
+    public ChatHolder style(MSChatStyleHelper mStyleHelper) {
+        mStyleHelper.styleRecipientMessage(mView, mName, mMsg, mTime);
+        return this;
     }
 }

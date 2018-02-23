@@ -3,6 +3,7 @@ package info.marcussoftware.mschat.view.adapter.holders;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import info.marcussoftware.mschat.util.MSChatStyleHelper;
 import info.marcussoftware.mschat.view.adapter.util.ChatWrapper;
 
 /**
@@ -16,4 +17,6 @@ public abstract class ChatHolder extends RecyclerView.ViewHolder {
     }
 
     public abstract void bindData(ChatWrapper chatWrapper);
+
+    public abstract ChatHolder style(MSChatStyleHelper mStyleHelper);
 }

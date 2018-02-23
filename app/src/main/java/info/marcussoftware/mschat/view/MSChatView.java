@@ -1,6 +1,7 @@
 package info.marcussoftware.mschat.view;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Handler;
@@ -18,7 +19,6 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +30,7 @@ import info.marcussoftware.mschat.interfaces.Message;
 import info.marcussoftware.mschat.interfaces.OnLoadMoreItemsListener;
 import info.marcussoftware.mschat.util.AnimateUtil;
 import info.marcussoftware.mschat.util.DateUtil;
+import info.marcussoftware.mschat.util.MSChatStyleHelper;
 import info.marcussoftware.mschat.view.adapter.ChatAdapter;
 import info.marcussoftware.mschat.view.adapter.util.ChatWrapper;
 import info.marcussoftware.mschat.view.contract.MSChatPresenter;
@@ -53,6 +54,7 @@ public class MSChatView extends FrameLayout implements info.marcussoftware.mscha
     private ImageView chatBackground;
     private Drawable mBackgroundDrawable;
     private int mBackgroundColor;
+    private MSChatStyleHelper mStyleHelper;
 
     public MSChatView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
@@ -80,12 +82,33 @@ public class MSChatView extends FrameLayout implements info.marcussoftware.mscha
 
     private void init() {
         inflate(getContext(), R.layout.ms_chat_layout, this);
+        mStyleHelper = new MSChatStyleHelper(getContext());
         initViews();
         initRecyclerView();
     }
 
     private void initAttributes(AttributeSet attrs) {
+        TypedArray typedArray = getContext().getTheme().obtainStyledAttributes(attrs,
+                R.styleable.MSChatView,
+                0, 0);
+        try {
+            mStyleHelper.setRecipientBackgroundColor(typedArray.getColor(R.styleable.MSChatView_recipientBackgroundColor, 0))
+                    .setSenderBackgroundColor(typedArray.getColor(R.styleable.MSChatView_senderBackgroundColor, 0))
+                    .setDatetimeBackgroundColor(typedArray.getColor(R.styleable.MSChatView_dateTimeBackgroundColor, 0))
+                    .setRecipientBackground(typedArray.getDrawable(R.styleable.MSChatView_recipientBackground))
+                    .setSenderBackground(typedArray.getDrawable(R.styleable.MSChatView_senderBackground))
+                    .setDatetimeBackground(typedArray.getDrawable(R.styleable.MSChatView_dateTimeBackground))
 
+                    .setTextAreaBackground(typedArray.getDrawable(R.styleable.MSChatView_textAreaBackground))
+
+                    .setSenderMessagePosition(typedArray.getInteger(R.styleable.MSChatView_senderMessagePosition, 8388613))
+                    .setRecipientMessagePosition(typedArray.getInteger(R.styleable.MSChatView_recipientMessagePosition, 8388611))
+
+                    .setShowRecipientName(typedArray.getBoolean(R.styleable.MSChatView_showRecipientName, true))
+                    .setShowSenderName(typedArray.getBoolean(R.styleable.MSChatView_showSenderName, false));
+        } finally {
+            typedArray.recycle();
+        }
     }
 
     private void initViews() {
@@ -104,7 +127,6 @@ public class MSChatView extends FrameLayout implements info.marcussoftware.mscha
         mScrollCounter = findViewById(R.id.scrollBottom);
         chatBackground = findViewById(R.id.chatBackground);
         if (mBackgroundDrawable != null || mBackgroundColor == 0) {
-
             chatBackground.setImageDrawable(mBackgroundDrawable);
             chatBackground.setBackgroundColor(mBackgroundColor);
         }
@@ -197,7 +219,7 @@ public class MSChatView extends FrameLayout implements info.marcussoftware.mscha
     }
 
     private ChatAdapter getAdapter() {
-        if (mAdapter == null) mAdapter = new ChatAdapter();
+        if (mAdapter == null) mAdapter = new ChatAdapter(mStyleHelper);
         return mAdapter;
     }
 
